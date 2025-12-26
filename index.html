@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Eligibility Estimator | AI Advisor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #fffbeb; min-height: 100vh; color: #1f2937; }
+        .glass-card { background: white; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid #fef3c7; }
+        .ai-card { border-left: 6px solid #8b5cf6; background: linear-gradient(to right, #ffffff, #f5f3ff); }
+        input, select { transition: all 0.2s ease; border: 1.5px solid #e5e7eb !important; }
+        input:focus, select:focus { border-color: #10b981 !important; ring: 2px; ring-color: #d1fae5; }
+    </style>
+</head>
+<body class="p-4 md:p-10">
+
+    <header class="max-w-5xl mx-auto flex items-center justify-between mb-8 border-b border-yellow-200 pb-5">
+        <div class="flex items-center gap-2 text-green-600 font-bold text-xl">
+            <i data-lucide="bar-chart-3"></i> FinPredict
+        </div>
+        <h1 class="text-xl md:text-2xl font-black text-gray-800 tracking-tight">LOAN ELIGIBILITY ESTIMATOR</h1>
+        <div class="hidden md:flex gap-4 text-xs font-bold text-gray-400 uppercase tracking-widest">
+            <span>Secure</span> • <span>Instant</span> • <span>AI Driven</span>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
+            <img src="./logo.png" class="w-28 h-28" alt="finance">
+            <div class="bg-white px-8 py-3 rounded-full shadow-sm border border-yellow-100 text-sm font-semibold text-gray-600 italic">
+                “Estimate Your Loan Eligibility Before Apply”
+            </div>
+            <img src="https://illustrations.popsy.co/amber/success.svg" class="w-28 h-28" alt="success">
+        </div>
+
+        <div class="glass-card p-8 mb-10">
+            <h2 class="text-lg font-bold text-gray-800 mb-8 flex items-center gap-2">
+                <i data-lucide="clipboard-list" class="text-green-600 w-5 h-5"></i> Enter Your Details
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6">
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-gray-500 uppercase">Monthly Income (₹)</label>
+                    <input type="number" id="income" placeholder="e.g. 50000" class="w-full p-3 bg-gray-50 rounded-xl outline-none">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-gray-500 uppercase">Monthly Expenses (₹)</label>
+                    <input type="number" id="expenses" placeholder="e.g. 0" class="w-full p-3 bg-gray-50 rounded-xl outline-none">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-gray-500 uppercase">Existing EMIs (₹)</label>
+                    <input type="number" id="emis" placeholder="e.g. 5000" class="w-full p-3 bg-gray-50 rounded-xl outline-none">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-gray-500 uppercase">Loan Tenure (Years)</label>
+                    <select id="tenure" class="w-full p-3 bg-gray-50 rounded-xl outline-none">
+                        <option value="1">1 Year</option>
+                        <option value="3">3 Years</option>
+                        <option value="5" selected>5 Years</option>
+                        <option value="10">10 Years</option>
+                    </select>
+                </div>
+                <div class="md:col-span-2 space-y-2">
+                    <label class="text-xs font-bold text-gray-500 uppercase">Credit Score Range</label>
+                    <select id="credit" class="w-full p-3 bg-gray-50 rounded-xl outline-none">
+                        <option value="300">300 - 550 (Poor)</option>
+                        <option value="550">550 - 650 (Fair)</option>
+                        <option value="650">650 - 750 (Good)</option>
+                        <option value="750">750+ (Excellent)</option>
+                    </select>
+                </div>
+            </div>
+            <button onclick="calculateEligibility()" class="w-full mt-10 bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-2xl transition-all shadow-lg flex items-center justify-center gap-2 active:scale-[0.98]">
+                <i data-lucide="sparkles" class="w-5 h-5"></i> Check Eligibility
+            </button>
+        </div>
+
+        <div id="resultsSection" class="hidden animate-in fade-in slide-in-from-bottom-5 duration-500">
+            <h2 class="text-lg font-bold text-gray-800 mb-6">Eligibility Results</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div class="glass-card p-6 text-center border-b-4 border-blue-500">
+                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Eligible Loan Amount</p>
+                    <p id="resAmount" class="text-2xl font-black text-gray-800">₹ 0</p>
+                </div>
+                <div class="glass-card p-6 text-center border-b-4 border-indigo-500">
+                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Expected EMI Range</p>
+                    <p id="resEMI" class="text-xl font-bold text-gray-800">₹ 0</p>
+                    <p class="text-[10px] text-gray-400 mt-1 italic">/ month</p>
+                </div>
+                <div class="glass-card p-6 text-center border-b-4 border-yellow-500 flex flex-col items-center justify-center">
+                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Risk Level</p>
+                    <div id="riskBadge" class="mb-2"></div>
+                    <p id="riskSubtext" class="text-[10px] text-gray-500 leading-tight"></p>
+                </div>
+            </div>
+
+            <div class="glass-card ai-card p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="bg-purple-600 p-2 rounded-lg text-white">
+                        <i data-lucide="bot" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-purple-700">AI Loan Advisor</h3>
+                </div>
+                <div id="aiResponse" class="space-y-4 text-sm text-gray-700 leading-relaxed">
+                    </div>
+            </div>
+            
+            <p class="text-center text-[10px] text-gray-400 mt-8 italic">
+                Disclaimer: This is a smart estimation based on general bank algorithms. Actual approval depends on internal bank policies.
+            </p>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        function calculateEligibility() {
+            // 1. Capture Inputs
+            const income = parseFloat(document.getElementById('income').value) || 0;
+            const existingEmis = parseFloat(document.getElementById('emis').value) || 0;
+            const tenureYears = parseInt(document.getElementById('tenure').value);
+            const creditScore = parseInt(document.getElementById('credit').value);
+            
+            // Safety: Banks assume a minimum cost of living even if user enters 0
+            let expensesInput = parseFloat(document.getElementById('expenses').value) || 0;
+            const minLivingExpense = income * 0.15; // Assume 15% as floor for realistic lending
+            const effectiveExpenses = Math.max(expensesInput, minLivingExpense);
+
+            // 2. The Core FOIR Calculation (Industry Standard)
+            const maxTotalDebtRatio = 0.50; // 50% of income can go to debt
+            const absoluteMaxEMI = income * 0.40; // 40% cap for a single new loan
+            
+            const capacityBasedOnIncome = (income * maxTotalDebtRatio) - existingEmis;
+            const capacityBasedOnDisposable = income - effectiveExpenses - existingEmis;
+            
+            // Pick the most conservative EMI to ensure accuracy
+            const finalEMI = Math.max(0, Math.min(capacityBasedOnIncome, capacityBasedOnDisposable, absoluteMaxEMI));
+
+            // 3. Dynamic Interest Rate based on Credit Score
+            let annualRate = 0.15; // Default for Poor (300-550)
+            if (creditScore >= 750) annualRate = 0.095;      // Excellent
+            else if (creditScore >= 650) annualRate = 0.11;  // Good
+            else if (creditScore >= 550) annualRate = 0.13;  // Fair
+
+            // 4. Principal Calculation (Annuity Formula)
+            const r = annualRate / 12;
+            const n = tenureYears * 12;
+            let loanPrincipal = 0;
+            
+            if (finalEMI > 0) {
+                loanPrincipal = (finalEMI * (1 - Math.pow(1 + r, -n))) / r;
+            }
+
+            // 5. Dynamic Risk Assessment
+            const totalObligation = finalEMI + existingEmis;
+            const dtiRatio = (totalObligation / income) * 100;
+            
+            let risk = "LOW";
+            if (creditScore < 550 || dtiRatio > 45) risk = "HIGH";
+            else if (creditScore < 650 || dtiRatio > 35) risk = "MEDIUM";
+
+            updateUI(loanPrincipal, finalEMI, risk, dtiRatio, income, creditScore, existingEmis, expensesInput);
+        }
+
+        function updateUI(principal, emi, risk, dti, income, credit, oldEmi, rawExp) {
+            document.getElementById('resultsSection').classList.remove('hidden');
+            document.getElementById('resAmount').innerText = "₹ " + Math.round(principal).toLocaleString('en-IN');
+            document.getElementById('resEMI').innerText = `₹ ${Math.round(emi * 0.9).toLocaleString()} - ₹ ${Math.round(emi).toLocaleString()}`;
+            
+            // Risk Badge Logic
+            const badge = document.getElementById('riskBadge');
+            badge.innerText = risk + " RISK";
+            const colors = { 
+                "HIGH": "bg-red-100 text-red-700", 
+                "MEDIUM": "bg-yellow-100 text-yellow-700", 
+                "LOW": "bg-green-100 text-green-700" 
+            };
+            badge.className = `px-4 py-1 rounded-full text-[10px] font-black uppercase mb-2 ${colors[risk]}`;
+            document.getElementById('riskSubtext').innerText = `Based on ${Math.round(dti)}% debt-to-income ratio.`;
+
+            // AI Advisor Logic: Enhanced Narratives
+            const aiBox = document.getElementById('aiResponse');
+            let mainAdvice = "";
+            let tip = "";
+
+            if (risk === "HIGH") {
+                mainAdvice = `Your profile is flagged as <b>HIGH RISK</b> because your projected debt-to-income ratio (${Math.round(dti)}%) reaches the upper limit for a ${credit < 550 ? 'Poor' : 'Fair'} credit score.`;
+                tip = "Consider paying off your existing EMI of ₹" + oldEmi.toLocaleString() + " first, or apply with a co-applicant to reduce the risk profile.";
+            } else if (risk === "MEDIUM") {
+                mainAdvice = `Your repayment capacity is stable, but your credit score or debt ratio puts you in the <b>Moderate</b> category. Banks may request additional income proof.`;
+                tip = "Opting for a longer tenure could lower your monthly EMI and move your risk status toward 'Low'.";
+            } else {
+                mainAdvice = `Your financial health is <b>Excellent</b>. Your requested EMI is well within the safe 40% income buffer, and you qualify for the best market rates.`;
+                tip = "Since you have strong eligibility, you could consider a shorter tenure to save on total interest costs.";
+            }
+
+            aiBox.innerHTML = `
+                <ul class="space-y-3">
+                    <li class="flex gap-2 items-start">
+                        <span class="text-purple-500 font-bold">•</span>
+                        <span>${mainAdvice}</span>
+                    </li>
+                    <li class="flex gap-2 items-start">
+                        <span class="text-purple-500 font-bold">•</span>
+                        <span>Estimated Safe EMI Capacity: <b>₹${Math.round(emi).toLocaleString()}</b> per month.</span>
+                    </li>
+                    <li class="flex gap-4 items-start bg-white p-4 rounded-xl border border-purple-100 mt-4">
+                        <i data-lucide="lightbulb" class="text-yellow-500 w-10 h-10"></i>
+                        <p class="text-xs text-gray-600"><b>Pro Tip:</b> ${tip}</p>
+                    </li>
+                </ul>
+            `;
+            lucide.createIcons();
+            
+            // Auto scroll to results
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
