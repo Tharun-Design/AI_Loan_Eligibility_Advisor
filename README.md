@@ -6,6 +6,16 @@ This project simulates how financial institutions assess a loan applicant's repa
 
 ---
 
+---
+
+## 📊 AI Loan Estimator Preview
+
+<p align="center">
+  <img src="screenshot.png" width="900">
+</p>
+
+---
+
 # 🚀 Project Overview
 
 Before applying for a loan, it is important to understand whether the application is financially feasible.
