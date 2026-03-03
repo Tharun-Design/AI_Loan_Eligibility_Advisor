@@ -1,4 +1,4 @@
-# 🏦 AI Loan Eligibility Advisor
+# AI Loan Eligibility Advisor
 
 An intelligent web application that estimates **loan eligibility, EMI capacity, and financial risk** using real-world banking logic such as FOIR, debt-to-income ratio, and credit score evaluation.
 
@@ -8,7 +8,7 @@ This project simulates how financial institutions assess a loan applicant's repa
 
 ---
 
-## 📊 AI Loan Estimator Preview
+## AI Loan Estimator Preview
 
 <p align="center">
   <img src="screenshot.png" width="900">
@@ -16,7 +16,7 @@ This project simulates how financial institutions assess a loan applicant's repa
 
 ---
 
-# 🚀 Project Overview
+# Project Overview
 
 Before applying for a loan, it is important to understand whether the application is financially feasible.
 
@@ -31,7 +31,7 @@ The system uses commonly used banking metrics to generate realistic estimations.
 
 ---
 
-# 📊 Key Features
+# Key Features
 
 ### Loan Eligibility Estimation
 Calculates the maximum loan amount a user can safely borrow.
@@ -54,7 +54,7 @@ Provides personalized suggestions to improve loan approval chances.
 
 ---
 
-# 🧠 Financial Logic Used
+# Financial Logic Used
 
 The estimator uses several real-world banking principles.
 
@@ -81,7 +81,7 @@ A single new loan EMI should not exceed **40% of income**.
 
 ---
 
-# 🧮 Loan Calculation Model
+# Loan Calculation Model
 
 Loan eligibility is calculated using the **annuity formula** used by banks.
 
@@ -99,7 +99,7 @@ Where
 
 ---
 
-# 🖥️ Tech Stack
+# Tech Stack
 
 Frontend  
 • HTML5  
@@ -116,7 +116,7 @@ Logic
 
 ---
 
-# 📸 Dashboard Preview
+# Dashboard Preview
 
 Add your screenshot here.
 
@@ -134,7 +134,7 @@ Example:
 
 ---
 
-# ⚙️ How It Works
+# How It Works
 
 1. User enters financial details
 2. System calculates disposable income
@@ -146,7 +146,7 @@ Example:
 
 ---
 
-# 🎯 Use Cases
+# Use Cases
 
 This tool can be useful for:
 
@@ -157,7 +157,7 @@ This tool can be useful for:
 
 ---
 
-# 🔮 Future Improvements
+# Future Improvements
 
 • Machine learning loan approval model  
 • Bank-specific policies simulation  
@@ -167,7 +167,7 @@ This tool can be useful for:
 
 ---
 
-# 👨‍💻 Author
+# Author
 
 **Tharun Kumar S**
 
@@ -176,6 +176,6 @@ Machine Learning | Data Analytics | AI Applications
 
 ---
 
-# ⭐ If you like this project
+# If you like this project
 
 Give it a star on GitHub and share feedback.
